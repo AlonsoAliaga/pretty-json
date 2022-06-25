@@ -1,0 +1,234 @@
+body {
+    text-align: center;
+  }
+  .rainbow {
+      position:relative;
+      background: linear-gradient(to right, #6666ff, #0099ff , #00ff00, #ff3399, #6666ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: rainbow_animation 2s ease-in-out infinite;
+      background-size: 400% 100%;
+  }
+  @keyframes rainbow_animation {
+      0%,100% {
+          background-position: 0 0;
+      }
+  
+      50% {
+          background-position: 100% 0;
+      }
+  }
+  @font-face {
+     font-family: MinecraftRegular;
+     src: url(https://raw.githubusercontent.com/AlonsoAliaga/generator/main/assets/fonts/MinecraftRegular.otf);
+  }
+  @font-face {
+     font-family: MinecraftBold;
+     src: url(https://raw.githubusercontent.com/AlonsoAliaga/generator/main/assets/fonts/MinecraftBold.otf);
+  }
+  @font-face {
+     font-family: MinecraftItalic;
+     src: url(https://raw.githubusercontent.com/AlonsoAliaga/generator/main/assets/fonts/MinecraftItalic.otf);
+  }
+  @font-face {
+     font-family: MinecraftBoldItalic;
+     src: url(https://raw.githubusercontent.com/AlonsoAliaga/generator/main/assets/fonts/MinecraftBoldItalic.otf);
+  }
+  @font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 300;
+    src: url(https://raw.githubusercontent.com/AlonsoAliaga/generator/main/assets/fonts/Quicksand/300.ttf) format('truetype');
+  }
+  @font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 500;
+    src: url(https://raw.githubusercontent.com/AlonsoAliaga/generator/main/assets/fonts/Quicksand/500.ttf) format('truetype');
+  }
+  @font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 600;
+    src: url(https://raw.githubusercontent.com/AlonsoAliaga/generator/main/assets/fonts/Quicksand/600.ttf) format('truetype');
+  }
+  @font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 700;
+    src: url(https://raw.githubusercontent.com/AlonsoAliaga/generator/main/generator/assets/fonts/Quicksand/700.ttf) format('truetype');
+  }
+  @font-face {
+    font-family: 'Quicksand';
+    font-style: regular;
+    font-display: swap;
+    font-weight: 400;
+    src: url(https://raw.githubusercontent.com/AlonsoAliaga/generator/main/assets/fonts/Quicksand/regular.ttf) format('truetype');
+  }
+  .minecraft {
+    font-family: MinecraftRegular;
+  }
+  .minecraftbold {
+    font-family: MinecraftBold;
+  }
+  .minecraftitalic {
+    font-family: MinecraftItalic;
+  }
+  .minecraftibold {
+    font-family: MinecraftBoldItalic;
+  }
+  .minecraftunderline {
+    text-decoration: underline;
+  }
+  .minecraftustrike {
+    text-decoration: underline line-through;
+  }
+  .minecraftstrike {
+    text-decoration: line-through;
+  }
+  #left {
+    float: left;
+    width: 500px;
+  }
+  #mybutton {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    padding: 0;
+    border: none;
+    background: none;
+  }
+  #mybutton:hover {
+    bottom: 15px;
+    right: 15px;
+    padding: 0;
+    border: none;
+    background: none;
+  }
+  .buttonface {
+    background-color: transparent;
+    padding: 0;
+    border: none;
+    background: none;
+  }
+  #yaml {
+    width: 100%;
+    border: 1px solid #aaa;
+    min-height: 350px;
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+  .content {
+    margin: 10px auto;
+    width: 1000px;
+  }
+  #output {
+    overflow-x: auto;
+  }
+  #output, #yaml {
+    font-family: monospace;
+  }
+  .help {
+    background: #d6d6d6;
+    margin: 5px;
+    padding: 5px;
+  }
+  #right {
+    float: right;
+  }
+  .examples, .code {
+    text-align: left;
+    padding: 30px;
+    margin-bottom: 10px;
+    border: 1px solid #aaa;
+    width: 420px;
+  }
+  .examples {
+    margin-top: 10px;
+  }
+  h1, h2 {
+    margin: 0;
+  }
+  h1 {
+    border-bottom: 1px solid #aaa;
+    margin-bottom: 10px;
+  }
+  .header, .footer {
+    text-align: center;
+  }
+  .clear {
+    clear: both;
+  }
+  .rainbow a:visited {
+    text-decoration: underline;
+    color: inherit;
+  }
+  .rainbow a {
+    color: inherit
+  }
+  .rainbow a:hover {
+    text-decoration: underline;
+    color: inherit;
+  }
+  a:visited,a {
+    color: rgb(23, 142, 246);
+    text-decoration: none;
+  }
+  a:hover {
+    color: rgb(246, 246, 23);
+    text-decoration: none;
+  }
+  #pay_my_bills {
+    margin-top: 10px;
+  }
+  #url_form input[name=url] {
+    width: 75%;
+  }
+  .error {
+    color: rgb(241, 76, 76);
+  }
+  .successdark {
+    color: rgb(172, 255, 165);
+  }
+  .successlight {
+    color: rgb(7, 84, 0);
+  }
+
+  body.dark {
+    background-color:#1c1c1cd9;
+    color:rgb(208, 208, 208);
+  }
+  select.dark {
+    background-color:#27152c;
+    border-color:#2C3844;
+    color:white;
+  }
+  .lightbuttonboxes {
+    font-family: MinecraftRegular;
+    border-radius: 25px;
+    border-color:#333333;
+    background-color:#f8fdc9;
+    color:rgb(39, 39, 39);
+    border-style: solid;
+    border-width: 2px;
+  }
+  .darkbuttonboxes {
+    font-family: MinecraftRegular;
+    border-radius: 25px;
+    border-color:#25172f;
+    background-color:#ffd5f2;
+    color:rgb(39, 39, 39);
+    border-style: solid;
+    border-width: 2px;
+  }
+  .darktextboxes {
+    font-family: MinecraftRegular;
+    background-color:#e4d2de;
+    border-color:#43245c;
+    color:rgb(39, 39, 39);
+  }

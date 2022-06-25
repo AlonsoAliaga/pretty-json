@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="https://cdn.discordapp.com/emojis/791742603183259648.webp?size=96&quality=lossless" type="image/x-icon">
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  
+    <title>Pretty JSON | AlonsoAliaga Development</title>
+    
+    <meta name="theme-color" content="#9a14ff"/>
+    <meta property="og:title" content="Pretty JSON | AlonsoAliaga Development">
+    <meta property="og:image" content="https://raw.githubusercontent.com/AlonsoAliaga/alonsoaliaga.github.io/main/assets/img/apple-touch-icon.png">
+    <meta property="og:description" content="Make your JSON file prettier!">
+    <meta property="og:url" content="https://alonsoaliaga.github.io/index.html">
+  </head>
+  <body onload="toggleDarkmode(); forceParser();">
+    <div class="content">
+      <div class="header">
+        <h1 style="font-family: MinecraftBold;">Pretty <a href="https://www.json.org/" rel="noopener" target="_blank">JSON</a></h1>
+        <span style="font-family: MinecraftBold;">Options:</span>
+        <div id="appearance" style="display: inline-block;font-family: MinecraftBold;padding: 5px 10px 5px 10px;">
+          <input type="checkbox" checked id="darkmode" onclick="toggleDarkmode();"></input>
+          <label for="darkmode" style="margin-bottom: 0px;margin-top: 0px;"> Dark Mode 👁‍🗨</label>
+        </div>
+        <br>
+        <br>
+      </div>
+      <div id="left">
+        <form id="yaml_form" method="POST" action="/">
+          <textarea id="yaml" class="yaml" name="yaml" placeholder="Paste the content of your file to make it pretty!">[
+  {
+    "just": "write some"
+  }, 
+  {
+    "json": [
+      [
+        "here", 
+        "and"
+      ], 
+      {
+        "it": "updates", 
+        "in": "real-time"
+      }
+    ]
+  }, 
+  {
+    "like": "magic."
+  }, 
+  {
+    "use": "it"
+  }, 
+  {
+    "to": [
+      [
+        "find", 
+        "errors", 
+        "in"
+      ], 
+      [
+        "your", 
+        "json", 
+        "files"
+      ]
+    ]
+  }
+]</textarea>
+        </form>
+        
+        <div class="row">
+          <div class="col-md-3" style="font-size: 20px; font-family: MinecraftBold;">
+            <label for="output-indentation">Output indentation: </label>
+            <select id="output-indentation"
+                    class="form-control"
+                    onchange="updateOutputText(event);"
+                    style="font-size: 16px; padding: 5px 0px 5px 30px; width: auto; font-family: MinecraftRegular;">
+              <option value='0'>2 spaces</option>
+              <option value='1'>4 spaces</option>
+              <option value='2'>Tab spacing</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div id="right">
+        <div class="code">
+          <h2 style="font-family: MinecraftBold;">Output</h2>
+          <pre id="output">Loading..</pre>
+        </div>
+        <div style="font-size: 18px ;padding-top: 20px;padding-bottom: 20px; font-family: MinecraftRegular;" class="examples">
+          <h2 style="font-size: 18px ;text-align: left; font-family: MinecraftBold;">More tools for you:</h2>
+          <span style="font-size: 15px;">💠</span> <span class="rainbow" style="color:transparent"><a href="http://alonsoaliaga.github.io/generator">HEX Generator (RBG)</a></span><br>
+          <span style="font-size: 15px;">💠</span> <span><a href="http://alonsoaliaga.github.io/yaml-parser">YAML/JSON Parser</a></span>
+          <br><br><br>
+          <h2 style="color: transparent;font-size: 18px ;text-align: center; font-family: MinecraftBold;"><a href="https://alonsoaliaga.github.io" rel="noopener" target="_blank">AlonsoAliaga Development</a></h2>
+        </div>
+      </div>
+      <div class="clear">
+        <br>
+      <div style="font-family: MinecraftBold;" class="footer">
+        Project inspired in <a href="http://yaml-online-parser.appspot.com">Online YAML Parser</a>. An <a href="https://github.com/ptarjan/online-yaml-parser">open source</a> project created by Paul Tarjan.
+      </div>
+      <div id="mybutton">
+        <button class="buttonface"><a href="https://alonsoaliaga.github.io"><img src="https://raw.githubusercontent.com/AlonsoAliaga/alonsoaliaga.github.io/main/assets/img/apple-touch-icon.png"></a></button>
+      </div>
+    </div>
+    <script ></script>
+  </div>
+
+  <!-- <script src="jquery-1.6.1.min.js"></script> -->
+  <script src="urldecode.js"></script>
+  <script src="autoresize.jquery.min.js"></script>
+  <!-- <script src="script.js"></script> -->
+  
+  <script>
+    let formats = {
+      default: {
+        space_key: 4
+      },
+      0: {
+        space_key: 2
+      },
+      1: {
+        space_key: 4
+      },
+      2: {
+        space_key: "\t"
+      },
+    }
+  function forceParser() {
+    //updateOutputText(event);
+    setTimeout(()=>{
+      $("#yaml_form").submit();
+    },100);
+  }
+  function updateOutputText(event) {
+    $("#yaml_form").submit();
+    /*
+    let obj;
+    try{
+      obj = JSON.parse(document.getElementById('yaml').value);
+    }catch(e) {
+      $("#output").wrapInner('<span class="error"/>');
+      $("#output").text(`An error occured. Try again? Or contact me.\n${e}`);
+      return;
+    }
+    let indentationFormat = formats[document.getElementById('output-indentation').value] || formats.default;
+    let result = JSON.stringify(obj, null, indentationFormat.space_key);
+    document.getElementById('output').innerText = result;
+    */
+  }
+  function getUpdatedOutputText(data) {
+    let obj;
+    try{
+      obj = JSON.parse(data);
+    }catch(e) {
+      return;
+    }
+    let indentationFormat = formats[document.getElementById('output-indentation').value] || formats.default;
+    let result = JSON.stringify(obj, null, indentationFormat.space_key);
+    return result;
+  }
+  function toggleDarkmode() {
+      if (document.getElementById('darkmode').checked == true) {
+        document.body.classList.add('dark');
+        document.getElementById('yaml').classList.add("darktextboxes");
+        
+        document.getElementById('output-indentation').classList.remove("lightbuttonboxes");
+        document.getElementById('output-indentation').classList.add("darkbuttonboxes");
+        
+        document.getElementById('appearance').classList.remove("lightbuttonboxes");
+        document.getElementById('appearance').classList.add("darkbuttonboxes");
+        let success = document.getElementById('success_message');
+        if(success) {
+          success.classList.remove("successlight");
+          success.classList.add("successdark");
+        }
+      } else {
+        document.body.classList.remove('dark');
+        document.getElementById('yaml').classList.remove("darktextboxes");
+        //Buttons
+        document.getElementById('output-indentation').classList.remove("darkbuttonboxes");
+        document.getElementById('output-indentation').classList.add("lightbuttonboxes");
+
+        document.getElementById('appearance').classList.remove("darkbuttonboxes");
+        document.getElementById('appearance').classList.add("lightbuttonboxes");
+        let success = document.getElementById('success_message');
+        if(success) {
+          success.classList.remove("successdark");
+          success.classList.add("successlight");
+        }
+      }
+      //console.log("Dark mode is now: "+(document.getElementById('darkmode').checked))
+  }
+  $(function() {
+    var submit = function() {
+      $("#yaml_form").submit();
+      return false;
+    };
+    $('#yaml').keyup(function() {
+      $("#yaml_form").submit();
+    });
+    $('input:radio[name=type]').click(function() {
+      $("#yaml_form").submit();
+    });
+
+    $("#yaml_form").submit(function(ev) {
+      var inputData = {
+        yaml: $("#yaml").val(),
+        type: $('input:radio[name=type]:checked').val()
+      };
+      $.ajax({
+        //Yeah, i need to fix this..
+        url: "https://yaml-online-parser.appspot.com/ajax?callback=?",
+        data: inputData,
+        success: function(data) {
+          console.log(data);
+          if (data.match(/^ERROR/)) {
+            $("#output").text(data);
+            $("#output").wrapInner('<span class="error"/>');
+            $("#output").append(`<span style="font-size: 15px;font-family: MinecraftRegular;">
+\n\nYour JSON content seems to have errors 😥</span>`
+            )
+          }else{
+            let result = getUpdatedOutputText(data);
+            $("#output").text(result);
+            $("#output").wrapInner('<span id="success_message" class="'+(
+              document.getElementById('darkmode').checked == true?"successdark":"successlight"
+            )+'"/>');
+          }
+          $("#link").attr("href", "?" + $.param(inputData));
+        },
+        error: function() {
+            $("#output").wrapInner('<span class="error"/>');
+            $("#output").text(`<span style="font-family: MinecraftRegular;">
+\n\nSomething went wrong!\n
+If problem persists, contact us on <a href="https://alonsoaliaga.com/discord">Discord</a>!</span>`
+            )
+        },
+        type: "POST",
+        dataType: "json",
+      });
+      return false;
+    });
+    $('textarea#yaml').autoResize({
+      // On resize:
+      onResize: function() {
+        $(this).css({opacity: 0.8});
+      },
+      // After resize:
+      animateCallback: function() {
+        $(this).css({opacity: 1});
+      },
+      // Quite slow animation:
+      animateDuration: 300,
+      // More extra space:
+      extraSpace: 40
+    }).keydown();
+  });
+  </script>
+  </body>
+</html>
