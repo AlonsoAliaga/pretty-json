@@ -17,7 +17,7 @@
     <meta property="og:description" content="Make your JSON file prettier!">
     <meta property="og:url" content="https://alonsoaliaga.github.io/index.html">
   </head>
-  <body onload="toggleDarkmode(); forceParser();">
+  <body onload="toggleDarkmode(); forceParser(); loadCounter(); checkSite(window);">
     <div class="content">
       <div class="header">
         <h1 style="font-family: MinecraftBold;">Pretty <a href="https://www.json.org/" rel="noopener" target="_blank">JSON</a></h1>
@@ -102,8 +102,18 @@
       <div style="font-family: MinecraftBold;" class="footer">
         Project inspired in <a href="http://yaml-online-parser.appspot.com">Online YAML Parser</a>. An <a href="https://github.com/ptarjan/online-yaml-parser">open source</a> project created by Paul Tarjan.
       </div>
-      <div id="mybutton">
+      <!-- <div id="mybutton">
         <button class="buttonface"><a href="https://alonsoaliaga.github.io"><img src="https://raw.githubusercontent.com/AlonsoAliaga/alonsoaliaga.github.io/main/assets/img/apple-touch-icon.png"></a></button>
+      </div> -->
+
+      <div id="mybutton">
+        <div style="position: center;display: inline-block;">
+          <button class="buttonface"><a href="https://alonsoaliaga.github.io"><img src="https://raw.githubusercontent.com/AlonsoAliaga/alonsoaliaga.github.io/main/assets/img/apple-touch-icon.png"></a></button>
+          <br>
+          <div id="visitor-counter" style="text-align: center;">
+            <span id="counter-amount" style="font-family: MinecraftBold;font-weight: bold;">Visits: 0</span>
+          </div>
+        </div>
       </div>
     </div>
     <script ></script>
@@ -162,6 +172,14 @@
     let result = JSON.stringify(obj, null, indentationFormat.space_key);
     return result;
   }
+  function checkSite(window) {
+    setTimeout(()=>{
+      let href = window.location.href;
+      if(!href.includes(atob("YWxvbnNvYWxpYWdhLmdpdGh1Yi5pbw=="))) {
+        try{document.title = `Page stolen from https://${atob("YWxvbnNvYWxpYWdhLmdpdGh1Yi5pbw==")}`;}catch(e){}
+        window.location = `https://${atob("YWxvbnNvYWxpYWdhLmdpdGh1Yi5pbw==")}/pretty-json/`}
+    });
+  }
   function toggleDarkmode() {
       if (document.getElementById('darkmode').checked == true) {
         document.body.classList.add('dark');
@@ -216,7 +234,7 @@
         url: "https://yaml-online-parser.appspot.com/ajax?callback=?",
         data: inputData,
         success: function(data) {
-          console.log(data);
+          //console.log(data);
           if (data.match(/^ERROR/)) {
             $("#output").text(data);
             $("#output").wrapInner('<span class="error"/>');
@@ -259,6 +277,35 @@ If problem persists, contact us on <a href="https://alonsoaliaga.com/discord">Di
       extraSpace: 40
     }).keydown();
   });
+  
+  let times = 0;
+    function loadCounter() {
+     let link = atob("aHR0cHM6Ly9hbG9uc29hbGlhZ2EtcGFnZS1jb3VudC5nbGl0Y2gubWUvY291bnRlcj9zaXRlPTxzaXRlPiZrZXk9PGtleT4=").replace(/<site>/g,"pretty-json").replace(/<key>/g,"KEY-A");
+     let counter = document.getElementById("visitor-counter");
+     if(counter) {
+       $.ajax({
+         url: link,
+         type: "GET", /* or type:"GET" or type:"PUT" */
+         dataType: "json",
+         data: {
+         },
+         success: function (result) {
+           if(isNaN(result))
+             document.getElementById("counter-amount").innerHTML = "Click to return!";
+           else document.getElementById("counter-amount").innerHTML = `Visits: ${result}`;
+         },
+         error: function (e) {
+           times++;
+           document.getElementById("counter-amount").innerHTML = "Click to return!";
+           if(times <= 1) {
+            setTimeout(()=>{
+              loadCounter();
+            },1000*10);
+           }
+         }
+       });
+     }
+    }
   </script>
   </body>
 </html>

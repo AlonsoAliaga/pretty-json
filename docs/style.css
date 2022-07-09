@@ -102,6 +102,7 @@ body {
     padding: 0;
     border: none;
     background: none;
+    font-family: MinecraftRegular;
   }
   #mybutton:hover {
     bottom: 15px;
