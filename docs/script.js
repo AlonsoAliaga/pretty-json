@@ -50,7 +50,6 @@ function test() {
   }
   function checkSite(window) {
     setTimeout(()=>{
-      return
       let href = window.location.href;
       if(!href.includes(atob("YWxvbnNvYWxpYWdhLmdpdGh1Yi5pbw=="))) {
         try{document.title = `Page stolen from https://${atob("YWxvbnNvYWxpYWdhLmdpdGh1Yi5pbw==")}`;}catch(e){}
@@ -149,7 +148,7 @@ function test() {
               document.getElementById("output").parentElement.style.cssText  = 'font-size: 15px;line-height: 1 !important;';
               setTimeout(()=>{
                 Prism.highlightElement(document.getElementById("output"));
-                Prism.highlightElement(document.getElementById("test"));
+                // Prism.highlightElement(document.getElementById("test"));
               },1000);
               setTimeout(()=>{
                 document.getElementById("output").parentElement.style.cssText  = 'font-size: 15px;line-height: 1 !important;';
