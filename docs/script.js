@@ -143,15 +143,14 @@ function test() {
               document.getElementById('darkmode').checked == true?"successdark":"successlight"
             )+'"/>');
 */
-            console.log(`LOGGING..`)
-            console.log(JSON.stringify(result,null,4));
-            console.log(JSON.stringify(result,null,2));
             document.getElementById("output").textContent = result;
             if(!adBlockEnabled) {
               document.getElementById("output").className = "language-json";
-              Prism.highlightElement(document.getElementById("output"));
-              Prism.highlightElement(document.getElementById("test"));
               document.getElementById("output").parentElement.style.cssText  = 'font-size: 15px;line-height: 1 !important;';
+              setTimeout(()=>{
+                Prism.highlightElement(document.getElementById("output"));
+                Prism.highlightElement(document.getElementById("test"));
+              },1000);
               setTimeout(()=>{
                 document.getElementById("output").parentElement.style.cssText  = 'font-size: 15px;line-height: 1 !important;';
               },1500);
