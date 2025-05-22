@@ -17,12 +17,12 @@
     <meta property="og:description" content="Make your JSON file prettier!">
     <meta property="og:url" content="https://alonsoaliaga.github.io/index.html">
   </head>
-  <body onload="toggleDarkmode(); forceParser(); loadCounter(); checkSite(window);">
+  <body>
     <div class="content">
       <div class="header">
         <h1 style="font-family: MinecraftBold;">Pretty <a href="https://www.json.org/" rel="noopener" target="_blank">JSON</a></h1>
         <span style="font-family: MinecraftBold;">Options:</span>
-        <div id="appearance" style="display: inline-block;font-family: MinecraftBold;padding: 5px 10px 5px 10px;">
+        <div id="appearance" class="darkbuttonboxes" style="display: inline-block;font-family: MinecraftBold;padding: 5px 10px 5px 10px;">
           <input type="checkbox" checked id="darkmode" onclick="toggleDarkmode();"></input>
           <label for="darkmode" style="margin-bottom: 0px;margin-top: 0px;"> Dark Mode 👁‍🗨</label>
         </div>
@@ -84,19 +84,16 @@
           </div>
         </div>
       </div>
-      <div id="right">
+      <div style="align-items: center;display: flex;flex-direction: column;" id="right">
         <div class="code">
           <h2 style="font-family: MinecraftBold;">Output</h2>
           <pre id="output">Loading..</pre>
         </div>
-        <div style="font-size: 18px ;padding-top: 20px;padding-bottom: 20px; font-family: MinecraftRegular;" class="examples">
-          <h2 style="font-size: 18px ;text-align: left; font-family: MinecraftBold;">More tools for you:</h2>
-          <span style="font-size: 15px;">💠</span> <span class="rainbow" style="color:transparent"><a href="http://alonsoaliaga.github.io/generator">HEX Generator (RBG)</a></span><br>
-          <span style="font-size: 15px;">💠</span> <span><a href="http://alonsoaliaga.github.io/font-generator">Font Generator</a></span><br>
-          <span style="font-size: 15px;">💠</span> <span><a href="http://alonsoaliaga.github.io/config-comparator">Config Comparator Updater</a></span><br>
-          <span style="font-size: 15px;">💠</span> <span><a href="http://alonsoaliaga.github.io/yaml-parser">YAML/JSON Parser</a></span><br>
-          <span style="font-size: 15px;">💠</span> <span><a href="http://alonsoaliaga.github.io/version-generator">ViaVersion Protocol Generator</a></span>
-          <br><br><br>
+        <div style="padding: 10px 5px 10px 5px; font-family: MinecraftRegular;display: flex;align-items: center;flex-direction: column;width: 97%;" class="examples">
+          <h2 style="font-size: 20px ;text-align: left; font-family: MinecraftBold;justify-content: center;">More tools for you:</h2>
+          <div style="text-align: left;font-size: 15px;" id="tools-for-you">
+          </div>
+          <br>
           <h2 style="color: transparent;font-size: 18px ;text-align: center; font-family: MinecraftBold;"><a href="https://alonsoaliaga.github.io" rel="noopener" target="_blank">AlonsoAliaga Development</a></h2>
         </div>
       </div>
@@ -182,6 +179,23 @@
         try{document.title = `Page stolen from https://${atob("YWxvbnNvYWxpYWdhLmdpdGh1Yi5pbw==")}`;}catch(e){}
         window.location = `https://${atob("YWxvbnNvYWxpYWdhLmdpdGh1Yi5pbw==")}/pretty-json/`}
     });
+    fetch('https://api.github.com/repos/AlonsoAliaga/AlonsoAliagaAPI/contents/api/tools/tools-list.json?ref=main')
+      .then(res => res.json())
+      .then(content => {
+        const decoded = atob(content.content);
+        const parsed = JSON.parse(decoded);
+        let toolsData = parsed;
+        let toolsArray = []
+        console.log(`Loading ${Object.keys(toolsData).length} tools..`);
+        for(let toolData of toolsData) {
+          //console.log(toolData);
+          let clazz = typeof toolData.clazz == "undefined" ? "" : ` class="${toolData.clazz}"`;
+          let style = typeof toolData.style == "undefined" ? "" : ` style="${toolData.style}"`;
+          toolsArray.push(`<span>💠</span> <span${clazz}${style}><a href="${toolData.link}">${toolData.name}</a></span><br>`);
+        }
+        document.getElementById("tools-for-you").innerHTML = toolsArray.join(`
+`);
+      });
   }
   function toggleDarkmode() {
       if (document.getElementById('darkmode').checked == true) {
@@ -282,33 +296,42 @@ If problem persists, contact us on <a href="https://alonsoaliaga.com/discord">Di
   });
   
   let times = 0;
-    function loadCounter() {
-     let link = atob("aHR0cHM6Ly9hbG9uc29hbGlhZ2EtcGFnZS1jb3VudC5nbGl0Y2gubWUvY291bnRlcj9zaXRlPTxzaXRlPiZrZXk9PGtleT4=").replace(/<site>/g,"pretty-json").replace(/<key>/g,"KEY-A");
-     let counter = document.getElementById("visitor-counter");
-     if(counter) {
-       $.ajax({
-         url: link,
-         type: "GET", /* or type:"GET" or type:"PUT" */
-         dataType: "json",
-         data: {
-         },
-         success: function (result) {
-           if(isNaN(result))
-             document.getElementById("counter-amount").innerHTML = "Click to return!";
-           else document.getElementById("counter-amount").innerHTML = `Visits: ${result}`;
-         },
-         error: function (e) {
-           times++;
-           document.getElementById("counter-amount").innerHTML = "Click to return!";
-           if(times <= 1) {
-            setTimeout(()=>{
-              loadCounter();
-            },1000*10);
-           }
-         }
-       });
-     }
+  function loadCounter() {
+    let link = atob("aHR0cHM6Ly9hbG9uc29hbGlhZ2EtcGFnZS1jb3VudC5nbGl0Y2gubWUvY291bnRlcj9zaXRlPTxzaXRlPiZrZXk9PGtleT4=").replace(/<site>/g,"pretty-json").replace(/<key>/g,"KEY-A");
+    let counter = document.getElementById("visitor-counter");
+    if(counter) {
+      $.ajax({
+        url: link,
+        type: "GET", /* or type:"GET" or type:"PUT" */
+        dataType: "json",
+        data: {
+        },
+        success: function (result) {
+          if(isNaN(result))
+            document.getElementById("counter-amount").innerHTML = "Click to return!";
+          else document.getElementById("counter-amount").innerHTML = `Visits: ${result}`;
+        },
+        error: function (e) {
+          times++;
+          document.getElementById("counter-amount").innerHTML = "Click to return!";
+          if(times <= 1) {
+           setTimeout(()=>{
+             loadCounter();
+           },1000*10);
+          }
+        }
+      });
     }
+  }
+  document.addEventListener("DOMContentLoaded", () => {
+    toggleDarkmode();
+    forceParser();
+    loadCounter();
+    checkSite(window);
+  });
   </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5185973148525065"
+   crossorigin="anonymous"></script>
+   <script src="script.js"></script>
   </body>
 </html>
