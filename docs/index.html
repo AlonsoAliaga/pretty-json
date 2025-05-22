@@ -18,6 +18,11 @@
     <meta property="og:url" content="https://alonsoaliaga.github.io/index.html">
   </head>
   <body>
+    <pre><code id="test" class="language-yaml">
+      <xml>
+        This: "is a test, ignore xD"
+      </xml>
+    </code></pre>
     <div class="content">
       <div class="header">
         <h1 style="font-family: MinecraftBold;">Pretty <a href="https://www.json.org/" rel="noopener" target="_blank">JSON</a></h1>
@@ -69,7 +74,6 @@
   }
 ]</textarea>
         </form>
-        
         <div class="row">
           <div class="col-md-3" style="font-size: 20px; font-family: MinecraftBold;">
             <label for="output-indentation">Output indentation: </label>
@@ -85,9 +89,13 @@
         </div>
       </div>
       <div style="align-items: center;display: flex;flex-direction: column;" id="right">
+        <div id="please-disable-adblock" style="display: none;width: 100%;border-width: 1px;border-style: solid;border-color: white;height: 45px;align-items: center;justify-content: center;background-color: rgba(202, 44, 44, 0.767);">
+          <img height="35px" src="https://raw.githubusercontent.com/AlonsoAliaga/config-comparator/main/assets/images/lock-icon.png">
+          <span>Disable AdBlock to view colored formatted json!</span></div>
         <div class="code">
           <h2 style="font-family: MinecraftBold;">Output</h2>
-          <pre id="output">Loading..</pre>
+          <pre><code style="font-size: 15px;line-height: 0.7px !important;" id="output" class="language-json">Loading..</code></pre>
+          <!-- <pre id="output">Loading..</pre> -->
         </div>
         <div style="padding: 10px 5px 10px 5px; font-family: MinecraftRegular;display: flex;align-items: center;flex-direction: column;width: 97%;" class="examples">
           <h2 style="font-size: 20px ;text-align: left; font-family: MinecraftBold;justify-content: center;">More tools for you:</h2>
@@ -116,222 +124,19 @@
         </div>
       </div>
     </div>
-    <script ></script>
   </div>
 
   <!-- <script src="jquery-1.6.1.min.js"></script> -->
   <script src="urldecode.js"></script>
   <script src="autoresize.jquery.min.js"></script>
   <!-- <script src="script.js"></script> -->
-  
-  <script>
-    let formats = {
-      default: {
-        space_key: 4
-      },
-      0: {
-        space_key: 2
-      },
-      1: {
-        space_key: 4
-      },
-      2: {
-        space_key: "\t"
-      },
-    }
-  function forceParser() {
-    //updateOutputText(event);
-    setTimeout(()=>{
-      $("#yaml_form").submit();
-    },100);
-  }
-  function updateOutputText(event) {
-    $("#yaml_form").submit();
-    /*
-    let obj;
-    try{
-      obj = JSON.parse(document.getElementById('yaml').value);
-    }catch(e) {
-      $("#output").wrapInner('<span class="error"/>');
-      $("#output").text(`An error occured. Try again? Or contact me.\n${e}`);
-      return;
-    }
-    let indentationFormat = formats[document.getElementById('output-indentation').value] || formats.default;
-    let result = JSON.stringify(obj, null, indentationFormat.space_key);
-    document.getElementById('output').innerText = result;
-    */
-  }
-  function getUpdatedOutputText(data) {
-    let obj;
-    try{
-      obj = JSON.parse(data);
-    }catch(e) {
-      return;
-    }
-    let indentationFormat = formats[document.getElementById('output-indentation').value] || formats.default;
-    let result = JSON.stringify(obj, null, indentationFormat.space_key);
-    return result;
-  }
-  function checkSite(window) {
-    setTimeout(()=>{
-      let href = window.location.href;
-      if(!href.includes(atob("YWxvbnNvYWxpYWdhLmdpdGh1Yi5pbw=="))) {
-        try{document.title = `Page stolen from https://${atob("YWxvbnNvYWxpYWdhLmdpdGh1Yi5pbw==")}`;}catch(e){}
-        window.location = `https://${atob("YWxvbnNvYWxpYWdhLmdpdGh1Yi5pbw==")}/pretty-json/`}
-    });
-    fetch('https://api.github.com/repos/AlonsoAliaga/AlonsoAliagaAPI/contents/api/tools/tools-list.json?ref=main')
-      .then(res => res.json())
-      .then(content => {
-        const decoded = atob(content.content);
-        const parsed = JSON.parse(decoded);
-        let toolsData = parsed;
-        let toolsArray = []
-        console.log(`Loading ${Object.keys(toolsData).length} tools..`);
-        for(let toolData of toolsData) {
-          //console.log(toolData);
-          let clazz = typeof toolData.clazz == "undefined" ? "" : ` class="${toolData.clazz}"`;
-          let style = typeof toolData.style == "undefined" ? "" : ` style="${toolData.style}"`;
-          toolsArray.push(`<span>💠</span> <span${clazz}${style}><a href="${toolData.link}">${toolData.name}</a></span><br>`);
-        }
-        document.getElementById("tools-for-you").innerHTML = toolsArray.join(`
-`);
-      });
-  }
-  function toggleDarkmode() {
-      if (document.getElementById('darkmode').checked == true) {
-        document.body.classList.add('dark');
-        document.getElementById('yaml').classList.add("darktextboxes");
-        
-        document.getElementById('output-indentation').classList.remove("lightbuttonboxes");
-        document.getElementById('output-indentation').classList.add("darkbuttonboxes");
-        
-        document.getElementById('appearance').classList.remove("lightbuttonboxes");
-        document.getElementById('appearance').classList.add("darkbuttonboxes");
-        let success = document.getElementById('success_message');
-        if(success) {
-          success.classList.remove("successlight");
-          success.classList.add("successdark");
-        }
-      } else {
-        document.body.classList.remove('dark');
-        document.getElementById('yaml').classList.remove("darktextboxes");
-        //Buttons
-        document.getElementById('output-indentation').classList.remove("darkbuttonboxes");
-        document.getElementById('output-indentation').classList.add("lightbuttonboxes");
 
-        document.getElementById('appearance').classList.remove("darkbuttonboxes");
-        document.getElementById('appearance').classList.add("lightbuttonboxes");
-        let success = document.getElementById('success_message');
-        if(success) {
-          success.classList.remove("successdark");
-          success.classList.add("successlight");
-        }
-      }
-      //console.log("Dark mode is now: "+(document.getElementById('darkmode').checked))
-  }
-  $(function() {
-    var submit = function() {
-      $("#yaml_form").submit();
-      return false;
-    };
-    $('#yaml').keyup(function() {
-      $("#yaml_form").submit();
-    });
-    $('input:radio[name=type]').click(function() {
-      $("#yaml_form").submit();
-    });
-
-    $("#yaml_form").submit(function(ev) {
-      var inputData = {
-        yaml: $("#yaml").val(),
-        type: $('input:radio[name=type]:checked').val()
-      };
-      $.ajax({
-        //Yeah, i need to fix this..
-        url: "https://yaml-online-parser.appspot.com/ajax?callback=?",
-        data: inputData,
-        success: function(data) {
-          //console.log(data);
-          if (data.match(/^ERROR/)) {
-            $("#output").text(data);
-            $("#output").wrapInner('<span class="error"/>');
-            $("#output").append(`<span style="font-size: 15px;font-family: MinecraftRegular;">
-\n\nYour JSON content seems to have errors 😥</span>`
-            )
-          }else{
-            let result = getUpdatedOutputText(data);
-            $("#output").text(result);
-            $("#output").wrapInner('<span id="success_message" class="'+(
-              document.getElementById('darkmode').checked == true?"successdark":"successlight"
-            )+'"/>');
-          }
-          $("#link").attr("href", "?" + $.param(inputData));
-        },
-        error: function() {
-            $("#output").wrapInner('<span class="error"/>');
-            $("#output").text(`<span style="font-family: MinecraftRegular;">
-\n\nSomething went wrong!\n
-If problem persists, contact us on <a href="https://alonsoaliaga.com/discord">Discord</a>!</span>`
-            )
-        },
-        type: "POST",
-        dataType: "json",
-      });
-      return false;
-    });
-    $('textarea#yaml').autoResize({
-      // On resize:
-      onResize: function() {
-        $(this).css({opacity: 0.8});
-      },
-      // After resize:
-      animateCallback: function() {
-        $(this).css({opacity: 1});
-      },
-      // Quite slow animation:
-      animateDuration: 300,
-      // More extra space:
-      extraSpace: 40
-    }).keydown();
-  });
-  
-  let times = 0;
-  function loadCounter() {
-    let link = atob("aHR0cHM6Ly9hbG9uc29hbGlhZ2EtcGFnZS1jb3VudC5nbGl0Y2gubWUvY291bnRlcj9zaXRlPTxzaXRlPiZrZXk9PGtleT4=").replace(/<site>/g,"pretty-json").replace(/<key>/g,"KEY-A");
-    let counter = document.getElementById("visitor-counter");
-    if(counter) {
-      $.ajax({
-        url: link,
-        type: "GET", /* or type:"GET" or type:"PUT" */
-        dataType: "json",
-        data: {
-        },
-        success: function (result) {
-          if(isNaN(result))
-            document.getElementById("counter-amount").innerHTML = "Click to return!";
-          else document.getElementById("counter-amount").innerHTML = `Visits: ${result}`;
-        },
-        error: function (e) {
-          times++;
-          document.getElementById("counter-amount").innerHTML = "Click to return!";
-          if(times <= 1) {
-           setTimeout(()=>{
-             loadCounter();
-           },1000*10);
-          }
-        }
-      });
-    }
-  }
-  document.addEventListener("DOMContentLoaded", () => {
-    toggleDarkmode();
-    forceParser();
-    loadCounter();
-    checkSite(window);
-  });
-  </script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5185973148525065"
-   crossorigin="anonymous"></script>
-   <script src="script.js"></script>
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+  <script src="script.js"></script>
+  <script src="resources.js"></script>
   </body>
 </html>
