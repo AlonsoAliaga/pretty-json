@@ -93,11 +93,11 @@
   }
   #left {
     float: left;
-    width: 45%;
+    width: 48%;
   }
   #right {
     float: right;
-    width: 45%;
+    width: 48%;
   }
   #mybutton {
     position: fixed;
