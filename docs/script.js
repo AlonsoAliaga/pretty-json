@@ -55,22 +55,17 @@ function test() {
         try{document.title = `Page stolen from https://${atob("YWxvbnNvYWxpYWdhLmdpdGh1Yi5pbw==")}`;}catch(e){}
         window.location = `https://${atob("YWxvbnNvYWxpYWdhLmdpdGh1Yi5pbw==")}/pretty-json/`}
     });
-    fetch('https://api.github.com/repos/AlonsoAliaga/AlonsoAliagaAPI/contents/api/tools/tools-list.json?ref=main')
+    fetch('https://raw.githubusercontent.com/AlonsoAliaga/AlonsoAliagaAPI/refs/heads/main/api/tools/tools-list.json')
       .then(res => res.json())
       .then(content => {
-        const decoded = atob(content.content);
-        const parsed = JSON.parse(decoded);
-        let toolsData = parsed;
+        let toolsData = content;
         let toolsArray = []
-        console.log(`Loading ${Object.keys(toolsData).length} tools..`);
         for(let toolData of toolsData) {
-          //console.log(toolData);
           let clazz = typeof toolData.clazz == "undefined" ? "" : ` class="${toolData.clazz}"`;
           let style = typeof toolData.style == "undefined" ? "" : ` style="${toolData.style}"`;
-          toolsArray.push(`<span>💠</span> <span${clazz}${style}><a href="${toolData.link}">${toolData.name}</a></span><br>`);
+          toolsArray.push(`<span>💠</span> <span${clazz}${style}><a title="${toolData.description}" id="tool-priority-${toolData.priority}" href="${toolData.link}">${toolData.name}</a></span>`);
         }
-        document.getElementById("tools-for-you").innerHTML = toolsArray.join(`
-`);
+        document.getElementById("tools-for-you").innerHTML = toolsArray.join(`<br>`);
       });
   }
   function toggleDarkmode() {
